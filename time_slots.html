@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Time Slots</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #003366 50%, #fff8dc 50%);
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        form {
+            background-color: rgba(0, 0, 50, 0.8);
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+        }
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            color: black;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background-color: #ffcc00;
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #ffdb4d;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h2>Create Routine Time Slots for
+        {{ session.branch }} - Sem {{ session.semester }} - {{ session.year }}
+    </h2>
+
+    <form method="POST">
+        <label>College Day Start:
+            <select name="start_day" required>
+                {% for d in week_days %}
+                <option value="{{ d }}">{{ d }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>College Day End:
+            <select name="end_day" required>
+                {% for d in week_days %}
+                <option value="{{ d }}">{{ d }}</option>
+                {% endfor %}
+            </select>
+        </label>
+
+        <label>Start Time:
+            <input type="time" name="start_time" required>
+        </label>
+
+        <label>End Time:
+            <input type="time" name="end_time" required>
+        </label>
+
+        <label>Slot Duration (minutes):
+            <input type="number" name="slot_duration" value="60" min="15" required>
+        </label>
+
+        <label>Break Start:
+            <input type="time" name="break_start" required>
+        </label>
+
+        <label>Break End:
+            <input type="time" name="break_end" required>
+        </label>
+
+        <button type="submit">Generate Time Slots</button>
+    </form>
+</body>
+</html>
+

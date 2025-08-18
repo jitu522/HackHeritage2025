@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Course List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 28px;
+            color: #ffdd57;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ffdd57, 0 0 20px #ffdd57; }
+            to { text-shadow: 0 0 20px #ff5733, 0 0 30px #ff5733; }
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+            transform: perspective(1000px) rotateX(5deg);
+            animation: tableFloat 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes tableFloat {
+            from { transform: perspective(1000px) rotateX(5deg) translateY(0px); }
+            to { transform: perspective(1000px) rotateX(5deg) translateY(-10px); }
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: rgba(255, 215, 0, 0.8);
+            color: #333;
+            font-size: 18px;
+            text-transform: uppercase;
+        }
+
+        tr {
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        tr:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.2);
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff5733, #ffdd57);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px #ffdd57;
+        }
+
+        a {
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Course List for {{ branch }} - Semester {{ semester }} - {{ year }}</h2>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>Teacher Name</th>
+                <th>Course Name</th>
+                <th>Course Code</th>
+                <th>Tutorial Time</th>
+                <th>Tutorials/Week</th>
+                <th>Lab Time</th>
+                <th>Labs/Week</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in courses %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] if row[3] else "—" }}</td>
+                <td>{{ row[5] }}</td>
+                <td>{{ row[4] if row[4] else "—" }}</td>
+                <td>{{ row[6] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="{{ url_for('time_slots') }}">
+        <button>Next → Create Time Slots</button>
+    </a>
+
+</body>
+</html>
+
+
+

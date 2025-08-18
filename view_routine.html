@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Routine</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #444;
+            padding: 6px;
+            text-align: center;
+        }
+        th {
+            background: #eee;
+        }
+        .day-col {
+            font-weight: bold;
+            background: #f9f9f9;
+            width: 120px;
+        }
+        td {
+            vertical-align: middle;
+            font-size: 1em;  /* slightly larger text */
+        }
+        .break {
+            background-color: #ffecec;
+        }
+        .lab {
+            background-color: #e3f2fd;
+        }
+        .tutorial {
+            background-color: #e8f5e9;
+        }
+        .free {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <h2>Routine for {{ branch }} - Semester {{ semester }} - {{ year }}</h2>
+
+    <table>
+        <tr>
+            <th class="day-col">Day \ Time</th>
+            {% for slot in slot_labels %}
+            <th>{{ slot }}</th>
+            {% endfor %}
+        </tr>
+
+        {% for row in table_rows %}
+        <tr>
+            <td class="day-col">{{ row[0] }}</td>
+            {% for cell in row[1:] %}
+                {% if cell == 'Break' %}
+                    <td class="break">Break</td>
+                {% elif cell != 'Free' %}
+                    {% set parts = cell.split('\n') %}
+                    <td class="{% if '(Lab)' in parts[1] %}lab{% else %}tutorial{% endif %}">
+                        <span style="font-size: 1em;">
+                            {{ parts[0] }} / 
+                            <strong>{{ parts[1] }}</strong>
+                            {% if parts|length > 2 %} / 
+                                <em>{{ parts[2] }}</em>
+                            {% endif %}
+                        </span>
+                    </td>
+                {% else %}
+                    <td class="free">Free</td>
+                {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p><a href="{{ url_for('exit_page') }}">Finish & Exit</a></p>
+</body>
+</html>
